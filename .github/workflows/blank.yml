@@ -1,0 +1,23 @@
+name: Update
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: Get current date
+        id: date
+        run: |
+          echo "::set-output name=date::$(date +'%Y-%m-%dT%H-%M')"
+      - name: setup python
+        uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install requests
+      - name: execute py script
+        run: |
+          python3 -c "import time; time.sleep(10); print('step1'); time.sleep(10); print('step2');"
